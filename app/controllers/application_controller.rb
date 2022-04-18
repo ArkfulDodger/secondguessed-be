@@ -6,7 +6,7 @@ class ApplicationController < Sinatra::Base
     { message: 'Good luck with your project!' }.to_json
   end
 
-  post '/word' do
+  post '/words' do
     text = params[:text]
     image_id = params[:image_id]
     user_ip = params[:user_ip]
@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
     image = Image.find(image_id)
     user = User.find_by_ip_address(user_ip)
 
-    word = Word.create(text: text, user: user, image: image)
+    word = Word.create(text: text, submitter: user, image: image)
     word.to_json
   end
 end
