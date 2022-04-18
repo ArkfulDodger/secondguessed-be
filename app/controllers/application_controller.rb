@@ -17,4 +17,11 @@ class ApplicationController < Sinatra::Base
     word = Word.create(text: text, submitter: user, image: image)
     word.to_json
   end
+
+  get '/words/:image_id' do
+    # binding.pry
+    image = Image.find(params[:image_id])
+    words = image.submitted_words
+    words.to_json
+  end
 end
