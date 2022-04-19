@@ -22,7 +22,7 @@ class ApplicationController < Sinatra::Base
     # binding.pry
     image = Image.find(params[:image_id])
     words = image.submitted_words
-    words.to_json
+    words.to_json(include: :guesses)
   end
 
   post '/guesses' do
@@ -61,5 +61,27 @@ class ApplicationController < Sinatra::Base
     guess = Guess.find(params[:id])
     guess.destroy
     guess.to_json
+  end
+
+  get '/final-words/:image_id' do
+    image = Image.find(params[:image_id])
+    words = image.submitted_words
+
+    # binding.pry
+
+    most_voted_word = words.max_by { |word| word.guesses.count }
+    most_votes = most_voted_word.guesses.count
+    sorted_words = words.sort { |a, b| b.guesses.count <=> a.guesses.count }
+    filtered_words =
+      sorted_words.select { |word| word.guesses.count != most_votes }
+    winning_vote_count = filtered_words.first.guesses.count
+    winning_words =
+      filtered_words.select { |word| word.guesses.count == winning_vote_count }
+
+    return_hash = {
+      words: words.to_json(include: :guesses),
+      winning_words: winning_words.to_json
+    }
+    return_hash.to_json
   end
 end
