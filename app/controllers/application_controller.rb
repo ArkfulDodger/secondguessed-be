@@ -69,19 +69,48 @@ class ApplicationController < Sinatra::Base
 
     # binding.pry
 
-    most_voted_word = words.max_by { |word| word.guesses.count }
-    most_votes = most_voted_word.guesses.count
-    sorted_words = words.sort { |a, b| b.guesses.count <=> a.guesses.count }
-    filtered_words =
-      sorted_words.select { |word| word.guesses.count != most_votes }
-    winning_vote_count = filtered_words.first.guesses.count
-    winning_words =
-      filtered_words.select { |word| word.guesses.count == winning_vote_count }
+    if words.count > 0
+      most_voted_word = words.max_by { |word| word.guesses.count }
+      most_votes = most_voted_word.guesses.count
+      sorted_words = words.sort { |a, b| b.guesses.count <=> a.guesses.count }
+      filtered_words =
+        sorted_words.select { |word| word.guesses.count != most_votes }
+
+      if (filtered_words.count > 0)
+        winning_vote_count = filtered_words.first.guesses.count
+        winning_words =
+          filtered_words.select do |word|
+            word.guesses.count == winning_vote_count
+          end
+      else
+        winning_words = []
+      end
+    else
+      winning_words = []
+    end
 
     return_hash = {
       words: words.to_json(include: :guesses),
       winning_words: winning_words.to_json
     }
     return_hash.to_json
+  end
+
+  get '/images/last' do
+    Image.last.to_json
+  end
+
+  get '/images/first' do
+    Image.first.to_json
+  end
+
+  get '/images/:id' do
+    Image.find(params[:id]).to_json
+  end
+
+  get '/images/next/:id' do
+    # binding.pry
+    img = Image.find(params[:id].to_i + 1)
+    img.to_json
   end
 end
