@@ -116,6 +116,12 @@ class ApplicationController < Sinatra::Base
     image.to_json
   end
 
+  get '/images/current' do
+    img = Image.all.max_by(&:start_time)
+
+    img ? img.to_json : {}.to_json
+  end
+
   get '/images/last' do
     Image.last.to_json
   end
