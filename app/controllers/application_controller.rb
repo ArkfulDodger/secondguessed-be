@@ -99,9 +99,21 @@ class ApplicationController < Sinatra::Base
 
     return_hash = {
       words: words.to_json(include: :guesses),
-      winning_words: winning_words.to_json
+      winning_words: winning_words.to_json,
     }
     return_hash.to_json
+  end
+
+  # POST new image to db from random API
+  post '/images' do
+    image =
+      Image.create(
+        url: params[:url],
+        alt: params[:alt],
+        start_time: params[:start_time],
+      )
+
+    image.to_json
   end
 
   get '/images/last' do
