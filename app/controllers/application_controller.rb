@@ -12,6 +12,13 @@ class ApplicationController < Sinatra::Base
     user.to_json
   end
 
+  patch '/users/:id' do
+    user = User.find(params[:id])
+    user.update(name: params[:name])
+
+    user.to_json
+  end
+
   post '/words' do
     text = params[:text]
     image_id = params[:image_id]
