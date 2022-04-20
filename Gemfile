@@ -2,7 +2,8 @@ source "https://rubygems.org"
 
 # A DSL for quickly creating web applications
 # https://github.com/sinatra/sinatra
-gem "sinatra", "~> 2.1"
+gem "sinatra", "~> 2.2"
+gem 'sinatra-contrib', require: false
 
 # A fast and simple web server
 # https://github.com/macournoyer/thin

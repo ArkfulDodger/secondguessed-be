@@ -83,11 +83,11 @@ Image.create(
 puts '...Done seeding Images!'
 
 puts 'Seeding users...'
-u1 = User.create(name: 'Joe Shmo', ip_address: '000.000.0.0')
-u2 = User.create(name: 'John Doe', ip_address: '000.000.0.1')
-u3 = User.create(name: 'Jane Doe', ip_address: '000.000.0.2')
-u4 = User.create(name: 'Anna Banana', ip_address: '000.000.0.3')
-u5 = User.create(name: 'Lurker', ip_address: '000.000.0.4')
+u1 = User.create(name: 'Joe Shmo', session_id: '000.000.0.0')
+u2 = User.create(name: 'John Doe', session_id: '000.000.0.1')
+u3 = User.create(name: 'Jane Doe', session_id: '000.000.0.2')
+u4 = User.create(name: 'Anna Banana', session_id: '000.000.0.3')
+u5 = User.create(name: 'Lurker', session_id: '000.000.0.4')
 puts '...Done seeding users'
 
 puts 'Seeding Words...'

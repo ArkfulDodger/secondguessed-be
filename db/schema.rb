@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_18_195026) do
+ActiveRecord::Schema.define(version: 2022_04_20_012357) do
 
   create_table "guesses", force: :cascade do |t|
     t.integer "image_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2022_04_18_195026) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "ip_address"
+    t.string "session_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -1,18 +1,37 @@
+require 'sinatra/base'
+require 'sinatra/cookies'
+
 class ApplicationController < Sinatra::Base
+  helpers Sinatra::Cookies
+
+  enable :sessions
+
   set :default_content_type, 'application/json'
 
   # Add your routes here
-  get '/' do
-    { message: 'Good luck with your project!' }.to_json
+  get '/current-user' do
+    puts '--------GETTING USER--------'
+
+    # binding.pry
+
+    if !cookies[:user_session]
+      cookies[:user_session] = session.id.to_s
+      User.create(name: 'Guest', session_id: cookies[:user_session])
+    end
+
+    user = User.find_by(session_id: cookies[:user_session])
+
+    # binding.pry
+    user.to_json
   end
 
   post '/words' do
     text = params[:text]
     image_id = params[:image_id]
-    user_ip = params[:user_ip]
+    session_id = params[:session_id]
 
     image = Image.find(image_id)
-    user = User.find_by_ip_address(user_ip)
+    user = User.find_by_session_id(session_id)
 
     word = Word.create(text: text, submitter: user, image: image)
     word.to_json
@@ -28,9 +47,9 @@ class ApplicationController < Sinatra::Base
   post '/guesses' do
     image_id = params[:image_id]
     word_id = params[:word_id]
-    user_ip = params[:user_IP]
+    session_id = params[:session_id]
 
-    user = User.find_by_ip_address(user_ip)
+    user = User.find_by_session_id(session_id)
     image = Image.find(image_id)
     word = Word.find(word_id)
 
@@ -40,11 +59,13 @@ class ApplicationController < Sinatra::Base
     guess.to_json
   end
 
-  get '/current-guess/:image_id/:user_ip' do
-    image_id = params[:image_id]
-    user_ip = params[:user_ip]
+  get '/current-guess/:image_id/:session_id' do
+    # binding.pry
 
-    user = User.find_by_ip_address(user_ip)
+    image_id = params[:image_id]
+    session_id = params[:session_id]
+
+    user = User.find_by_session_id(session_id)
     image = Image.find(image_id)
 
     guess = Guess.find_by(guesser: user, image: image)
