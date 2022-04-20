@@ -88,6 +88,7 @@ u2 = User.create(name: 'John Doe', session_id: '000.000.0.1')
 u3 = User.create(name: 'Jane Doe', session_id: '000.000.0.2')
 u4 = User.create(name: 'Anna Banana', session_id: '000.000.0.3')
 u5 = User.create(name: 'Lurker', session_id: '000.000.0.4')
+u6 = User.create(name: 'Foofoo', session_id: 'foobarmydude')
 puts '...Done seeding users'
 
 puts 'Seeding Words...'

@@ -1,27 +1,14 @@
-require 'sinatra/base'
-require 'sinatra/cookies'
-
 class ApplicationController < Sinatra::Base
-  helpers Sinatra::Cookies
-
-  enable :sessions
-
   set :default_content_type, 'application/json'
 
   # Add your routes here
-  get '/current-user' do
-    puts '--------GETTING USER--------'
+  get '/users/:session_id' do
+    user = User.find_by_session_id(params[:session_id])
+    user.to_json
+  end
 
-    # binding.pry
-
-    if !cookies[:user_session]
-      cookies[:user_session] = session.id.to_s
-      User.create(name: 'Guest', session_id: cookies[:user_session])
-    end
-
-    user = User.find_by(session_id: cookies[:user_session])
-
-    # binding.pry
+  post '/users' do
+    user = User.create(name: params[:name], session_id: params[:session_id])
     user.to_json
   end
 
