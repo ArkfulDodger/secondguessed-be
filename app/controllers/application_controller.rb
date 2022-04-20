@@ -2,8 +2,8 @@ class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
 
   # Add your routes here
-  get '/users/:session_id' do
-    user = User.find_by_session_id(params[:session_id])
+  get '/users/:id' do
+    user = User.find_by_session_id(params[:id])
     user.to_json
   end
 
@@ -22,10 +22,10 @@ class ApplicationController < Sinatra::Base
   post '/words' do
     text = params[:text]
     image_id = params[:image_id]
-    session_id = params[:session_id]
+    user_id = params[:user_id]
 
     image = Image.find(image_id)
-    user = User.find_by_session_id(session_id)
+    user = User.find(user_id)
 
     word = Word.create(text: text, submitter: user, image: image)
     word.to_json
@@ -41,9 +41,9 @@ class ApplicationController < Sinatra::Base
   post '/guesses' do
     image_id = params[:image_id]
     word_id = params[:word_id]
-    session_id = params[:session_id]
+    user_id = params[:user_id]
 
-    user = User.find_by_session_id(session_id)
+    user = User.find(user_id)
     image = Image.find(image_id)
     word = Word.find(word_id)
 
@@ -53,13 +53,13 @@ class ApplicationController < Sinatra::Base
     guess.to_json
   end
 
-  get '/current-guess/:image_id/:session_id' do
+  get '/current-guess/:image_id/:user_id' do
     # binding.pry
 
     image_id = params[:image_id]
-    session_id = params[:session_id]
+    user_id = params[:user_id]
 
-    user = User.find_by_session_id(session_id)
+    user = User.find(user_id)
     image = Image.find(image_id)
 
     guess = Guess.find_by(guesser: user, image: image)
@@ -106,7 +106,7 @@ class ApplicationController < Sinatra::Base
 
     return_hash = {
       words: words.to_json(include: :guesses),
-      winning_words: winning_words.to_json,
+      winning_words: winning_words.to_json
     }
     return_hash.to_json
   end
@@ -117,10 +117,16 @@ class ApplicationController < Sinatra::Base
       Image.create(
         url: params[:url],
         alt: params[:alt],
-        start_time: params[:start_time],
+        start_time: params[:start_time]
       )
 
     image.to_json
+  end
+
+  get '/images/current' do
+    img = Image.all.max_by(&:start_time)
+
+    img ? img.to_json : {}.to_json
   end
 
   get '/images/last' do
