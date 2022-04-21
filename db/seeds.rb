@@ -93,19 +93,19 @@ u5 = User.create(name: 'Lurker', session_id: '000.000.0.4')
 u6 = User.create(name: 'Foofoo', session_id: 'foobarmydude')
 puts '...Done seeding users'
 
-puts 'Seeding Words...'
-# w1 = Word.create(text: 'fire', image: img, submitter: u1)
-w2 = Word.create(text: 'lava', image: img, submitter: u2)
-w3 = Word.create(text: 'painting', image: img, submitter: u3)
-w4 = Word.create(text: 'squiggly', image: img, submitter: u4)
-puts '...Done seeding Words!'
+# puts 'Seeding Words...'
+# # w1 = Word.create(text: 'fire', image: img, submitter: u1)
+# w2 = Word.create(text: 'lava', image: img, submitter: u2)
+# w3 = Word.create(text: 'painting', image: img, submitter: u3)
+# w4 = Word.create(text: 'squiggly', image: img, submitter: u4)
+# puts '...Done seeding Words!'
 
-puts 'Seeding Guesses...'
-# g1 = Guess.create(image: img, guesser: u1, guessed_word: w2)
-g2 = Guess.create(image: img, guesser: u2, guessed_word: w2)
-g3 = Guess.create(image: img, guesser: u3, guessed_word: w3)
-g4 = Guess.create(image: img, guesser: u4, guessed_word: w3)
-g5 = Guess.create(image: img, guesser: u5, guessed_word: w3)
-puts '...Done seeding Guesses!'
+# puts 'Seeding Guesses...'
+# # g1 = Guess.create(image: img, guesser: u1, guessed_word: w2)
+# g2 = Guess.create(image: img, guesser: u2, guessed_word: w2)
+# g3 = Guess.create(image: img, guesser: u3, guessed_word: w3)
+# g4 = Guess.create(image: img, guesser: u4, guessed_word: w3)
+# g5 = Guess.create(image: img, guesser: u5, guessed_word: w3)
+# puts '...Done seeding Guesses!'
 
 puts '🌱 ..... All Done Seeding! 🌱'
