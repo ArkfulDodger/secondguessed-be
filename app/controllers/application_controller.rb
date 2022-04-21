@@ -38,6 +38,29 @@ class ApplicationController < Sinatra::Base
     words.to_json(include: :guesses)
   end
 
+  get '/current-word/:image_id/:user_id' do
+    image_id = params[:image_id]
+    user_id = params[:user_id]
+
+    user = User.find(user_id)
+    image = Image.find(image_id)
+
+    word = Word.find_by(submitter: user, image: image)
+    word.to_json
+  end
+
+  patch '/words/:image_id/:user_id' do
+    image_id = params[:image_id]
+    user_id = params[:user_id]
+
+    user = User.find(user_id)
+    image = Image.find(image_id)
+
+    word = Word.find_by(submitter: user, image: image)
+    word.update(text: params[:text])
+    word.to_json
+  end
+
   post '/guesses' do
     image_id = params[:image_id]
     word_id = params[:word_id]
