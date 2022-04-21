@@ -1,4 +1,5 @@
 source "https://rubygems.org"
+ruby "2.7.4"
 
 # A DSL for quickly creating web applications
 # https://github.com/sinatra/sinatra
@@ -44,6 +45,10 @@ group :development do
   # Automatically reload when there are changes
   # https://github.com/alexch/rerun
   gem "rerun"
+end
+
+group :production do
+  gem "pg"
 end
 
 # These gems will only be used when we are running tests
