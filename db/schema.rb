@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_20_012357) do
+ActiveRecord::Schema.define(version: 2022_04_21_192140) do
 
   create_table "guesses", force: :cascade do |t|
     t.integer "image_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2022_04_20_012357) do
     t.string "alt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "start_time"
+    t.float "start_time"
   end
 
   create_table "users", force: :cascade do |t|
