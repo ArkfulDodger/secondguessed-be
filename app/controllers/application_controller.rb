@@ -2,6 +2,10 @@ class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
 
   # Add your routes here
+  get '/users' do
+    User.all.to_json
+  end
+
   get '/users/:id' do
     user = User.find_by_session_id(params[:id])
     user.to_json
@@ -17,6 +21,10 @@ class ApplicationController < Sinatra::Base
     user.update(name: params[:name])
 
     user.to_json
+  end
+
+  get '/words' do
+    Word.all.to_json
   end
 
   post '/words' do
@@ -59,6 +67,10 @@ class ApplicationController < Sinatra::Base
     word = Word.find_by(submitter: user, image: image)
     word.update(text: params[:text])
     word.to_json
+  end
+
+  get '/guesses' do
+    Guess.all.to_json
   end
 
   post '/guesses' do
@@ -132,6 +144,10 @@ class ApplicationController < Sinatra::Base
       winning_words: winning_words.to_json
     }
     return_hash.to_json
+  end
+
+  get '/images' do
+    Image.all.to_json
   end
 
   # POST new image to db from random API
