@@ -153,11 +153,12 @@ class ApplicationController < Sinatra::Base
   # POST new image to db from random API
   post '/images' do
     image =
-      Image.create(
-        url: params[:url],
-        alt: params[:alt],
-        start_time: params[:start_time]
-      )
+      Image.find_by_start_time(params[:start_time]) ||
+        Image.create(
+          url: params[:url],
+          alt: params[:alt],
+          start_time: params[:start_time]
+        )
 
     image.to_json
   end
