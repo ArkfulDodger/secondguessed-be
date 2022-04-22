@@ -28,7 +28,7 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/words' do
-    text = params[:text].downcase.gsub(/[^a-zà-ž'_#\- ]/, '').strip!
+    text = params[:text].downcase.gsub(/[^a-zà-ž'_#\- ]/, '').strip
     image_id = params[:image_id]
     user_id = params[:user_id]
 
