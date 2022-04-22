@@ -149,6 +149,10 @@ class ApplicationController < Sinatra::Base
       winning_words = []
     end
 
+    binding.pry
+
+    # winners = User.where(winning_words.include?)
+
     return_hash = {
       words: words.to_json(include: :guesses),
       winning_words: winning_words.to_json

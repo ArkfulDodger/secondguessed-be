@@ -14,14 +14,14 @@ Word.reset_pk_sequence
 # puts 'Seeding Images...'
 
 # binding.pry
-# img =
-#   Image.create(
-#     url:
-#       'https://d2u3kfwd92fzu7.cloudfront.net/asset/cms/Art_Basel_Hong_Kong_2021_Partners-3-1.jpg',
-#     alt:
-#       'abstract artwork in bright reds and oranges, resembling lava flow or oils',
-#     start_time: Time.now.to_f * 1000 - (12 * 60 * 1000)
-#   )
+img =
+  Image.create(
+    url:
+      'https://d2u3kfwd92fzu7.cloudfront.net/asset/cms/Art_Basel_Hong_Kong_2021_Partners-3-1.jpg',
+    alt:
+      'abstract artwork in bright reds and oranges, resembling lava flow or oils',
+    start_time: Time.now.to_f * 1000 - (12 * 60 * 1000)
+  )
 # Image.create(
 #   url:
 #     'https://i.picsum.photos/id/1006/3000/2000.jpg?hmac=x83pQQ7LW1UTo8HxBcIWuRIVeN_uCg0cG6keXvNvM8g',
