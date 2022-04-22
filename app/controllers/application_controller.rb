@@ -35,9 +35,12 @@ class ApplicationController < Sinatra::Base
     image = Image.find(image_id)
     user = User.find(user_id)
 
-    word = !!Word.find_by_text(text)
-      ? 'TAKEN!'
-      : Word.create(text: text, submitter: user, image: image)
+    word =
+      if !!Word.find_by_text(text)
+        'TAKEN!'
+      else
+        Word.create(text: text, submitter: user, image: image)
+      end
     word.to_json
   end
 
