@@ -152,7 +152,8 @@ class ApplicationController < Sinatra::Base
 
     # binding.pry
     winners = []
-    winning_words.each { |w| w.guesses.each { |g| winners << g.guesser } }
+
+    # winning_words.each { |w| w.guesses.each { |g| winners << g.guesser } }
 
     return_hash = {
       words: words.to_json(include: :guesses),
