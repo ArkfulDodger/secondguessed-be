@@ -71,7 +71,11 @@ class ApplicationController < Sinatra::Base
     user = User.find(user_id)
 
     if !!Word.find_by(text: text, image: image)
-      word = 'TAKEN!'
+      if Word.find_by(text: text, image: image).submitter == user
+        word = Word.find_by(submitter: user, image: image)
+      else
+        word = 'TAKEN!'
+      end
     else
       word = Word.find_by(submitter: user, image: image)
       word.update(text: params[:text])
