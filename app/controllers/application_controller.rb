@@ -13,6 +13,10 @@ class ApplicationController < Sinatra::Base
 
   post '/users' do
     user = User.create(name: params[:name], session_id: params[:session_id])
+    if user.name == 'Guest'
+      guest_name = "Guest-#{user[:id]}"
+      user.update(name: guest_name)
+    end
     user.to_json
   end
 
