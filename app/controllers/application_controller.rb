@@ -157,7 +157,7 @@ class ApplicationController < Sinatra::Base
     return_hash = {
       words: words.to_json(include: :guesses),
       winning_words: winning_words.to_json,
-      winners: winners.uniq.to_json
+      winners: winners.to_json
     }
     return_hash.to_json
   end
