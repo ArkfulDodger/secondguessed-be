@@ -28,14 +28,16 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/words' do
-    text = params[:text]
+    text = params[:text].downcase.gsub(/[^a-zà-ž'_#\- ]/, '').strip!
     image_id = params[:image_id]
     user_id = params[:user_id]
 
     image = Image.find(image_id)
     user = User.find(user_id)
 
-    word = Word.create(text: text, submitter: user, image: image)
+    word = !!Word.find_by_text(text)
+      ? 'TAKEN!'
+      : Word.create(text: text, submitter: user, image: image)
     word.to_json
   end
 
