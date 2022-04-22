@@ -152,6 +152,7 @@ class ApplicationController < Sinatra::Base
 
   # POST new image to db from random API
   post '/images' do
+    # get the image to return
     image =
       Image.find_by_start_time(params[:start_time]) ||
         Image.create(
@@ -160,6 +161,11 @@ class ApplicationController < Sinatra::Base
           start_time: params[:start_time]
         )
 
+    # destroy any images other than the 10 most recent
+    images_to_keep = Image.last(20)
+    Image.all.each { |img| img.destroy if !images_to_keep.include?(img) }
+
+    # return image as json
     image.to_json
   end
 
