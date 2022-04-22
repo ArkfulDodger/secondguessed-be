@@ -82,7 +82,7 @@ class ApplicationController < Sinatra::Base
       end
     else
       word = Word.find_by(submitter: user, image: image)
-      word.update(text: params[:text])
+      word.update(text: text)
     end
 
     word.to_json
