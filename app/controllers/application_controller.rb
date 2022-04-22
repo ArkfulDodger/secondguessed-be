@@ -36,7 +36,7 @@ class ApplicationController < Sinatra::Base
     user = User.find(user_id)
 
     word =
-      if !!Word.find_by_text(text)
+      if !!Word.find_by(text: text, image: image)
         'TAKEN!'
       else
         Word.create(text: text, submitter: user, image: image)
@@ -65,12 +65,17 @@ class ApplicationController < Sinatra::Base
   patch '/words/:image_id/:user_id' do
     image_id = params[:image_id]
     user_id = params[:user_id]
+    text = params[:text].downcase.gsub(/[^a-zà-ž'_#\- ]/, '').strip
 
-    user = User.find(user_id)
     image = Image.find(image_id)
+    user = User.find(user_id)
+    word =
+      if !!Word.find_by(text: text, image: image)
+        'TAKEN!'
+      else
+        Word.find_by(submitter: user, image: image).update(text: params[:text])
+      end
 
-    word = Word.find_by(submitter: user, image: image)
-    word.update(text: params[:text])
     word.to_json
   end
 
