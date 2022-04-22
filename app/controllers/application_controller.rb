@@ -69,12 +69,13 @@ class ApplicationController < Sinatra::Base
 
     image = Image.find(image_id)
     user = User.find(user_id)
-    word =
-      if !!Word.find_by(text: text, image: image)
-        'TAKEN!'
-      else
-        Word.find_by(submitter: user, image: image).update(text: params[:text])
-      end
+
+    if !!Word.find_by(text: text, image: image)
+      word = 'TAKEN!'
+    else
+      word = Word.find_by(submitter: user, image: image)
+      word.update(text: params[:text])
+    end
 
     word.to_json
   end
